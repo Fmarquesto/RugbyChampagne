@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Models\Category;
 use App\Models\Championship;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -25,7 +26,10 @@ class ChampionshipController extends Controller
 
     public function getChampionshipCreate(Request $request, Response $response)
     {
-        return $this->view->render($response,'championship/championship-create.twig');
+        $categories = Category::all()->toArray();
+        return $this->view->render($response,'championship/championship-create.twig',[
+            "categories"=>$categories
+        ]);
     }
 
     public function postChampionshipCreate(Request $request, Response $response)
@@ -46,7 +50,7 @@ class ChampionshipController extends Controller
             'draw_points' => $request->getParam('drawPoints'),
             'lose_points' => $request->getParam('losePoints'),
             'round' => $request->getParam('round'),
-            'category_id' => 1
+            'category_id' => $request->getParam('category')
         ]);
 
         $this->flash->addMessage('info', 'Campeonato Creado Correctamente');

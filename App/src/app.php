@@ -89,6 +89,10 @@ $container['CategoryController'] = function($container){
     return new \App\Controller\CategoryController($container);
 };
 
+$container['TeamController'] = function($container){
+    return new \App\Controller\TeamController($container);
+};
+
 $app->add(new \App\Middleware\CsrfViewMiddleware($container));
 
 $app->add($container->csrf);

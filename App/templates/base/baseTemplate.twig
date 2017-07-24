@@ -38,6 +38,7 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.confirmation.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="/vendor/metisMenu/metisMenu.min.js"></script>
@@ -130,7 +131,19 @@
                                 </li>
 
                                 <li>
-                                    <a href="{{ path_for('championship.create') }}"> Alta</a>
+                                    <a href="{{ path_for('category.create') }}"> Alta</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-users" aria-hidden="true"></i> Equipos<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{{ path_for('teams') }}"> Listado</a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ path_for('team.create') }}"> Alta</a>
                                 </li>
                             </ul>
                         </li>

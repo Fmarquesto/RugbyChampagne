@@ -26,6 +26,13 @@ $app->group('',function() use ($app){
     $app->post('/championship/create','ChampionshipController:postChampionshipCreate');
 
     $app->get('/categories', 'CategoryController:getCategories')->setName('categories');
+    $app->get('/category/create', 'CategoryController:getCategoryCreate')->setName('category.create');
+    $app->post('/category/create', 'CategoryController:postCategoryCreate');
+
+    $app->get('/teams', 'TeamController:getTeams')->setName('teams');
+    $app->get('/team/create', 'TeamController:getTeamCreate')->setName('team.create');
+    $app->post('/team/create', 'TeamController:postTeamCreate');
+    $app->put('/team', 'TeamController:putTeam')->setName('team');
 
 })->add(new \App\Middleware\AuthMiddleware($container));
 

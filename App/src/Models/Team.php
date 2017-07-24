@@ -12,5 +12,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Team extends Model
 {
+    protected $table ='team';
 
+    protected $primaryKey = 'team_id';
+
+    protected $fillable = [
+        'name',
+        'category_id',
+        'country_id'
+    ];
 }

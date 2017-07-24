@@ -21,6 +21,7 @@ class User extends Model
         'username',
         'password',
         'name',
-        'last_name'
+        'last_name',
+        'email'
     ];
 }

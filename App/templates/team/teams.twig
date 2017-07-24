@@ -1,0 +1,99 @@
+{% extends 'base/baseTemplate.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12" id="categories">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 id="subjectName">Equipos</h4><div class="panel panel-default"><div class="panel-heading">Basic</div><div class="panel-body"><button class="btn btn-default" data-toggle="confirmation">Confirmation</button></div></div>
+                </div>
+                <div class="panel-body">
+                    <div class="clearfix"></div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered dt-responsive nowrap" id="teamList">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Categoria</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $( document ).ready(function() {
+            loadTable();
+
+        });
+
+        function loadTable()
+        {
+
+            $('#teamList').dataTable( {
+                "destroy": true,
+                "data":{{ data | raw}},
+                "columns": [
+                    {"data": "team_id"},
+                    {"data": "team"},
+                    {"data": "category"},
+                    {
+                        "targets": 0,
+                        "data": function ( row, type, val, meta ) {
+                            return row;
+                        },
+                        "render": function ( data, type, full, meta ) {
+                            $('[data-toggle=confirmation]').confirmation({
+                                rootSelector: '[data-toggle=confirmation]',
+                                container: 'body',
+                                onConfirm: function(){
+                                    $.ajax({
+                                        method: "PUT",
+                                        url: "{{ path_for('team') }}",
+                                        data: { action: "active", value: data.active?0:1 ,csrf_name : "{{ csrf.name | raw }}",csrf_value : "{{ csrf.value | raw }}" }
+                                    })
+                                        .done(function( msg ) {
+                                            alert( "Data Saved: " + msg );
+                                        });
+                                },
+                                onCancel: function(){}
+                            });
+                            //return '<div class="panel panel-default"><div class="panel-heading">Basic</div><div class="panel-body"><button class="btn btn-default" data-toggle="confirmation">Confirmation</button></div></div>';
+                            if(data.active){
+                                return '<a href="#" class="btn btn-xs btn-success">\
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;Editar</a>\
+                                    \
+                                    <button value="'+data.id+'" class="blockaff btn btn-xs btn-danger" type="button"\
+                                    data-toggle="confirmation"\
+                                    data-title="Esta seguro de bloquear este equipo?"\
+                                    data-btn-ok-label="Si"\
+                                    data-btn-cancel-label="No">\
+                                        <span class="fa fa-ban" aria-hidden="true"></span>&nbsp;Bloquear</div>\
+                                   </button>';
+                            }else{
+                                return '\
+                                    <button value="'+data.id+'" class="actaff btn btn-xs btn-success" type="button"\
+                                    data-toggle="confirmation"\
+                                    data-title="Esta seguro de activar este equipo?"\
+                                    data-btn-ok-label="Si"\
+                                    data-btn-cancel-label="No">\
+                                        <span class="fa fa-check" aria-hidden="true"></span>&nbsp;Habilitar</div>\
+                                   </button>';
+                            }
+                        }
+                    }
+                ],
+                "language": {
+                    "url": "{{ path_for('datatable.languaje') }}"
+                }
+            } );
+        }
+
+        $()
+    </script>
+{% endblock %}
