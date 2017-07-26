@@ -77,9 +77,20 @@ class TeamController extends Controller
 
     public function putTeam(Request $request, Response $response)
     {
-        $active = $request->getParam('value')? 1 : 0;
-        $team = Team::find(6);
-        $team->active = $active;
-        $team->save();
+        $teamId = $request->getParam('teamId');
+        if($teamId !='' && filter_var($teamId, FILTER_VALIDATE_INT)){
+            $active = $request->getParam('value')? 1 : 0;
+            $team = Team::find($teamId);
+            if(is_null($teamId)){
+                //No se encontro el team
+                exit('invalid team_id');
+            }
+            $team->active = $active;
+            $team->save();
+        }else{
+            //no deberia llegar aca
+            exit('no team_id');
+        }
+        return $response->withJson(json_encode(array('csrf_name'=>$this->container->csrf->getTokenName(),'csrf_value'=>$this->container->csrf->getTokenValue())));
     }
 }
