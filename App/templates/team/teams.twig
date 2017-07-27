@@ -78,10 +78,7 @@
                                     console.log("se cancelo la accion");
                                 }
                             });
-                            //return '<div class="panel panel-default"><div class="panel-heading">Basic</div><div class="panel-body"><button class="btn btn-default" data-toggle="confirmation">Confirmation</button></div></div>';
-
-
-                            var bt = '<a href="#" class="btn btn-xs btn-success isActive" id="'+data.team_id+'" style="display:'+(data.active?"inline":"none")+'">\
+                            return '<a href="#" class="btn btn-xs btn-success isActive" id="'+data.team_id+'" style="display:'+(data.active?"inline":"none")+'">\
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;Editar</a>\
                                     <button value="'+data.id+'" class="blockaff btn btn-xs btn-danger isActive" type="button"\
                                     data-toggle="confirmation"\
@@ -103,7 +100,6 @@
                                     active="'+data.active+'">\
                                         <span class="fa fa-check" aria-hidden="true"></span>&nbsp;Habilitar</div>\
                                    </button>';
-                            return bt;
                         }
                     }
                 ],
