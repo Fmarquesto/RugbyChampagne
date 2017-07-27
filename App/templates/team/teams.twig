@@ -54,46 +54,43 @@
                                 rootSelector: '[data-toggle=confirmation]',
                                 container: 'body',
                                 onConfirm: function(){
+                                    var teamId = this.attr('id');
+                                    var active = this.attr('active');
                                     $.ajax({
                                         method: "PUT",
                                         url: "{{ path_for('team') }}",
-                                        data: { teamId: data.team_id, value: data.active?0:1 ,csrf_name : csrf_name,csrf_value : csrf_value }
+                                        data: { teamId: teamId, value: active==='1'?0:1 ,csrf_name : csrf_name,csrf_value : csrf_value }
                                     })
                                         .done(function( msg ) {
-
                                             var res = JSON.parse(msg);
                                             csrf_value = res.csrf_value;
                                             csrf_name = res.csrf_name;
-                                            //TODO Revisar para que solo se oculte la linea marcada
-                                            if(data.active){
-                                                console.log("Aca");
-                                                $(".isInactive").show();
-                                                $(".isActive").hide();
+                                            if(active==='1'){
+                                                $("#"+teamId+".isInactive").show().attr('active','0');
+                                                $("#"+teamId+".isActive").hide();
                                             }else{
-                                                $(".isActive").show();
-                                                $(".isInactive").hide();
+                                                $("#"+teamId+".isActive").show().attr('active','1');
+                                                $("#"+teamId+".isInactive").hide();
                                             }
-                                            data.active = !data.active
                                         });
                                 },
-                                onCancel: function(){}
+                                onCancel: function(){
+                                    console.log("se cancelo la accion");
+                                }
                             });
                             //return '<div class="panel panel-default"><div class="panel-heading">Basic</div><div class="panel-body"><button class="btn btn-default" data-toggle="confirmation">Confirmation</button></div></div>';
 
-                            if(data.active){
 
-                            }else{
-
-                            }
-                            var buttons = '<a href="#" class="btn btn-xs btn-success isActive" id="'+data.team_id+'" style="display:'+(data.active?"inline":"none")+'">\
+                            var bt = '<a href="#" class="btn btn-xs btn-success isActive" id="'+data.team_id+'" style="display:'+(data.active?"inline":"none")+'">\
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;Editar</a>\
                                     <button value="'+data.id+'" class="blockaff btn btn-xs btn-danger isActive" type="button"\
                                     data-toggle="confirmation"\
                                     data-title="Esta seguro de bloquear este equipo?"\
                                     data-btn-ok-label="Si"\
                                     data-btn-cancel-label="No"\
-                                    style="display:'+(data.active?"inline":"none")+'\
-                                    id="'+data.team_id+'" ">\
+                                    style="display:'+(data.active?"inline":"none")+'"\
+                                    id="'+data.team_id+'"\
+                                    active="'+data.active+'">\
                                         <span class="fa fa-ban" aria-hidden="true"></span>&nbsp;Bloquear</div>\
                                    </button>\
                                    <button value="'+data.id+'" class="actaff btn btn-xs btn-success isInactive" type="button"\
@@ -101,11 +98,12 @@
                                     data-title="Esta seguro de activar este equipo?"\
                                     data-btn-ok-label="Si"\
                                     data-btn-cancel-label="No"\
-                                    style="display:'+(data.active?"none":"inline")+'\
-                                    id="'+data.team_id+'"">\
+                                    style="display:'+(data.active?"none":"inline")+'"\
+                                    id="'+data.team_id+'"\
+                                    active="'+data.active+'">\
                                         <span class="fa fa-check" aria-hidden="true"></span>&nbsp;Habilitar</div>\
                                    </button>';
-                            return buttons;
+                            return bt;
                         }
                     }
                 ],
