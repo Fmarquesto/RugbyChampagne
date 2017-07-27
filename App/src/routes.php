@@ -34,6 +34,11 @@ $app->group('',function() use ($app){
     $app->post('/team/create', 'TeamController:postTeamCreate');
     $app->put('/team', 'TeamController:putTeam')->setName('team');
 
+    $app->get('/players', 'PlayerController:getPlayer')->setName('players');
+    $app->get('/player/create', 'PlayerController:getPlayerCreate')->setName('player.create');
+    $app->post('/player/create', 'PlayerController:postPlayerCreate');
+    $app->put('/player', 'PlayerController:putPlayer')->setName('player');
+
 })->add(new \App\Middleware\AuthMiddleware($container));
 
 

@@ -93,6 +93,10 @@ $container['TeamController'] = function($container){
     return new \App\Controller\TeamController($container);
 };
 
+$container['PlayerController'] = function($container){
+    return new \App\Controller\PlayerController($container);
+};
+
 $app->add(new \App\Middleware\CsrfViewMiddleware($container));
 
 $app->add($container->csrf);
