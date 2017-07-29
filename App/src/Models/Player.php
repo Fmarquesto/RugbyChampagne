@@ -13,4 +13,12 @@ use Illuminate\Database\Eloquent\Model;
 class Player extends Model
 {
     protected $table = 'player';
+
+    protected $primaryKey = 'player_id';
+
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'country_id'
+    ];
 }
