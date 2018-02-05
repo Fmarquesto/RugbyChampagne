@@ -10,6 +10,9 @@ namespace App\Controller\Auth;
 
 use App\Controller\Controller;
 use App\Models\User;
+use App\Util\SendMail;
+use Nette\Mail\Message;
+use Nette\Mail\SendmailMailer;
 use Respect\Validation\Validator as v;
 
 class AuthController extends Controller
@@ -46,6 +49,18 @@ class AuthController extends Controller
         $this->flash->addMessage('info', 'Solicitud enviada correctamente');
 
         //$this->auth->attempt($user->username,$request->getParam('form-password'));
+
+        /*$mail = new Message;
+        $mail->setFrom('John <fede.marquesto@gmail.com>')
+            ->addTo('fede.marquesto@gmail.com')
+            ->addTo('fede.marquesto@gmail.com')
+            ->setSubject('Order Confirmation')
+            ->setBody("Hello, Your order has been accepted.");
+
+        $mailer = new SendmailMailer;
+        $mailer->send($mail);*/
+
+        SendMail::Send('asas');
 
         return $response->withRedirect($this->router->pathFor('auth.signin'));
     }
